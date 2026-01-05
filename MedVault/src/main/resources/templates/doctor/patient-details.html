@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details - MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar"><div class="container">
+        <a href="/doctor/dashboard" class="navbar-brand">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>MedVault</a>
+        <ul class="navbar-nav"><li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li></ul></div></nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/doctor/dashboard" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a></li>
+            <li><a href="/doctor/profile" ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile</a></li>
+            <li><a href="/doctor/slots"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Create Slots</a></li>
+            <li><a href="/doctor/appointments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/></svg>My Appointments</a></li>
+            <li><a href="/doctor/booking-requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Booking Requests</a></li>
+            <li><a href="/doctor/patients"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Patients</a></li>
+            <li><a href="/doctor/medical-records"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/></svg>Medical Records</a></li>
+            <li><a href="/doctor/prescriptions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/></svg>Prescriptions</a></li>
+            <li><a href="/doctor/reviews"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Reviews & Ratings</a></li>
+            <li><a href="/doctor/emergency-requests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>Emergency Requests</a></li>
+            <li><a href="/doctor/document-verification"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Document Verification</a></li>
+        </ul>
+    </div>
+    <main class="main-content">
+        <div class="page-header"><h1 class="page-title">Patient Details</h1></div>
+        <a href="/doctor/patients" class="btn btn-secondary" style="margin-bottom: 20px;">&larr; Back to Patients</a>
+        <div class="grid grid-2">
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #134e4a;">Patient Information</h3>
+                <p><strong>Name:</strong> <span th:text="${patient.user.fullName}">Patient</span></p>
+                <p><strong>Email:</strong> <span th:text="${patient.user.email}">email@example.com</span></p>
+                <p><strong>Phone:</strong> <span th:text="${patient.user.phone != null ? patient.user.phone : 'Not provided'}">Phone</span></p>
+                <p><strong>Date of Birth:</strong> <span th:text="${patient.dateOfBirth != null ? patient.dateOfBirth : 'Not provided'}">DOB</span></p>
+                <p><strong>Gender:</strong> <span th:text="${patient.gender != null ? patient.gender : 'Not provided'}">Gender</span></p>
+                <p><strong>Blood Group:</strong> <span th:text="${patient.bloodGroup != null ? patient.bloodGroup : 'Not provided'}">Blood Group</span></p>
+                <p th:if="${patient.allergies}"><strong>Allergies:</strong> <span th:text="${patient.allergies}">Allergies</span></p>
+                <p th:if="${patient.chronicConditions}"><strong>Chronic Conditions:</strong> <span th:text="${patient.chronicConditions}">Conditions</span></p>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: #134e4a;">Accessible Medical Records</h3>
+                <div th:if="${#lists.isEmpty(accessibleRecords)}" class="empty-state"><p>No records shared with you by this patient.</p></div>
+                <div th:if="${!#lists.isEmpty(accessibleRecords)}">
+                    <div th:each="record : ${accessibleRecords}" style="padding: 10px; border-bottom: 1px solid #99f6e4;">
+                        <h4 th:text="${record.title}">Record</h4>
+                        <p style="color: #64748b; font-size: 13px;"><span th:text="${record.recordType}">Type</span> | <span th:text="${record.recordDate}">Date</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

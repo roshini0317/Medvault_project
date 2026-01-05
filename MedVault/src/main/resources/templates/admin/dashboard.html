@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/admin/dashboard" class="navbar-brand">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                MedVault Admin
+            </a>
+            <ul class="navbar-nav">
+                <li><span style="color: rgba(255,255,255,0.9);" th:text="${user.fullName}">Admin</span></li>
+                <li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/admin/dashboard" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/admin/doctors">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Manage Doctors
+            </a></li>
+            <li><a href="/admin/patients">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Patients
+            </a></li>
+            <li><a href="/admin/document-verification">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Document Verification
+            </a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Admin Dashboard</h1>
+            <p class="page-subtitle">System overview and management</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+                <div class="stat-info"><h3 th:text="${totalDoctors}">0</h3><p>Total Doctors</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+                <div class="stat-info"><h3 th:text="${verifiedDoctors}">0</h3><p>Verified Doctors</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                <div class="stat-info"><h3 th:text="${pendingDoctors}">0</h3><p>Pending Verification</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+                <div class="stat-info"><h3 th:text="${totalPatients}">0</h3><p>Total Patients</p></div>
+            </div>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Pending Actions</h2></div>
+                <div style="display: grid; gap: 15px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fef3c7; border-radius: 8px;">
+                        <span>Doctor Verifications</span>
+                        <span class="badge badge-warning" th:text="${pendingDoctors}">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #dbeafe; border-radius: 8px;">
+                        <span>Document Verifications</span>
+                        <span class="badge badge-info" th:text="${unverifiedDocuments}">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #fee2e2; border-radius: 8px;">
+                        <span>Emergency Requests</span>
+                        <span class="badge badge-danger emergency-badge" th:text="${pendingEmergencies}">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">Quick Actions</h2></div>
+                <div style="display: grid; gap: 10px;">
+                    <a href="/admin/doctors" class="btn btn-primary">Manage Doctors</a>
+                    <a href="/admin/patients" class="btn btn-secondary">Manage Patients</a>
+                    <a href="/admin/document-verification" class="btn btn-secondary">Verify Documents</a>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header"><h2 class="card-title">System Stats</h2></div>
+                <div style="display: grid; gap: 10px;">
+                    <p><strong>Pending Appointments:</strong> <span th:text="${pendingAppointments}">0</span></p>
+                    <p><strong>Total Users:</strong> <span th:text="${totalDoctors + totalPatients + 1}">0</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

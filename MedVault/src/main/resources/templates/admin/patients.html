@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Patients - MedVault Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar"><div class="container">
+        <a href="/admin/dashboard" class="navbar-brand"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>MedVault Admin</a>
+        <ul class="navbar-nav"><li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li></ul></div></nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/admin/dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/admin/doctors">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Manage Doctors
+            </a></li>
+            <li><a href="/admin/patients" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Patients
+            </a></li>
+            <li><a href="/admin/document-verification">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Document Verification
+            </a></li>
+        </ul>
+    </div>
+    <main class="main-content">
+        <div class="page-header"><h1 class="page-title">Manage Patients</h1><p class="page-subtitle">View and manage patient accounts</p></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div class="card">
+            <div th:if="${#lists.isEmpty(patients)}" class="empty-state"><p>No patients registered yet.</p></div>
+            <table th:if="${!#lists.isEmpty(patients)}" class="table">
+                <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Blood Group</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                    <tr th:each="patient : ${patients}">
+                        <td th:text="${patient.user.fullName}">Patient</td>
+                        <td th:text="${patient.user.email}">email</td>
+                        <td th:text="${patient.user.phone != null ? patient.user.phone : '-'}">Phone</td>
+                        <td th:text="${patient.bloodGroup != null ? patient.bloodGroup : '-'}">Blood</td>
+                        <td><span th:if="${patient.user.enabled}" class="badge badge-success">Active</span><span th:if="${!patient.user.enabled}" class="badge badge-danger">Disabled</span></td>
+                        <td class="action-buttons">
+                            <form th:action="@{/admin/patients/{id}/toggle-status(id=${patient.id})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-sm" th:classappend="${patient.user.enabled ? 'btn-warning' : 'btn-success'}" th:text="${patient.user.enabled ? 'Disable' : 'Enable'}">Toggle</button>
+                            </form>
+                            <form th:action="@{/admin/patients/{id}/delete(id=${patient.id})}" method="post" style="display: inline;"><button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this patient?')">Delete</button></form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

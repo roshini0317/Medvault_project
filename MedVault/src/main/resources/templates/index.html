@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<!-- Top Navbar -->
+<nav class="navbar">
+    <div class="container">
+        <a th:href="@{/'/'}" href="/" class="navbar-brand">
+            <svg width="32" height="32" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            MedVault
+        </a>
+        <ul class="navbar-nav">
+            <!-- Navbar buttons use the same styles as hero buttons -->
+            <li>
+                <a th:href="@{/login}" href="/login"
+                   class="btn btn-primary btn-sm">Login</a>
+            </li>
+            <li>
+                <a th:href="@{/register}" href="/register"
+                   class="btn btn-primary btn-sm">Register</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero section -->
+<section class="hero">
+    <div class="container">
+        <h1>Appointment Booking &amp; Medical Records Management System</h1>
+        <p>
+            MedVault is a web-based Personal Electronic Health Record (EHR) System that enables
+            patients to securely store, manage, and exchange their medical records with healthcare
+            professionals.
+        </p>
+        <div align="center">
+                <a th:href="@{/login}" href="/login"
+                   class="btn btn-primary btn-sm">Login</a>
+
+                <a th:href="@{/register}" href="/register"
+                   class="btn btn-primary btn-sm">Register</a>
+        </div>
+    </div>
+</section>
+<!-- Call‑to‑action section -->
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024 MedVault. All rights reserved.</p>
+    </div>
+</footer>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

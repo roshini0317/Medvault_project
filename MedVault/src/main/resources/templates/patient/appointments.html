@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments - MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/patient/dashboard" class="navbar-brand">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                MedVault
+            </a>
+            <ul class="navbar-nav">
+                <li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/patient/dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/patient/profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                My Profile
+            </a></li>
+            <li><a href="/patient/book-appointment">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Book Appointment
+            </a></li>
+            <li><a href="/patient/appointments" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                My Appointments
+            </a></li>
+            <li><a href="/patient/prescriptions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Prescriptions
+            </a></li>
+            <li><a href="/patient/health-records">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                Health Records
+            </a></li>
+            <li><a href="/patient/document-permissions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Document Permissions
+            </a></li>
+            <li><a href="/patient/reviews">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Reviews
+            </a></li>
+            <li><a href="/patient/emergency">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Emergency Request
+            </a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">My Appointments</h1>
+            <p class="page-subtitle">View and manage your appointments</p>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">All Appointments</h2>
+                <a href="/patient/book-appointment" class="btn btn-primary btn-sm">Book New</a>
+            </div>
+
+            <div th:if="${#lists.isEmpty(appointments)}" class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <h3>No Appointments Yet</h3>
+                <p>You haven't booked any appointments yet.</p>
+                <a href="/patient/book-appointment" class="btn btn-primary">Book Your First Appointment</a>
+            </div>
+
+            <table th:if="${!#lists.isEmpty(appointments)}" class="table">
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Specialization</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="apt : ${appointments}">
+                        <td th:text="${apt.doctor.user.fullName}">Dr. Smith</td>
+                        <td th:text="${apt.doctor.specialization}">Cardiology</td>
+                        <td th:text="${apt.slot.date}">2024-01-15</td>
+                        <td th:text="${apt.slot.startTime + ' - ' + apt.slot.endTime}">10:00 - 10:30</td>
+                        <td>
+                            <span class="badge" th:classappend="${apt.status.name() == 'APPROVED' ? 'badge-success' : (apt.status.name() == 'PENDING' ? 'badge-warning' : (apt.status.name() == 'COMPLETED' ? 'badge-info' : 'badge-danger'))}" th:text="${apt.status}">PENDING</span>
+                        </td>
+                        <td>
+                            <form th:if="${apt.status.name() == 'PENDING' or apt.status.name() == 'APPROVED'}" th:action="@{/patient/appointments/{id}/cancel(id=${apt.id})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')">Cancel</button>
+                            </form>
+                            <a th:if="${apt.status.name() == 'COMPLETED'}" th:href="@{/patient/reviews}" class="btn btn-secondary btn-sm">Leave Review</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
