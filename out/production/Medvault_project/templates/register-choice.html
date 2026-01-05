@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="login-page">
+    <div class="login-card" style="max-width: 500px;">
+        <div class="login-header">
+            <a href="/" style="color: #0d9488; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+                MedVault
+            </a>
+            <h1>Create Account</h1>
+            <p>Choose your account type</p>
+        </div>
+
+        <div style="display: grid; gap: 20px;">
+            <a href="/register/patient" class="card" style="text-decoration: none; display: flex; align-items: center; gap: 20px; padding: 25px; transition: all 0.3s ease;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #0d9488, #0891b2); display: flex; align-items: center; justify-content: center; color: white;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 style="color: #134e4a; margin-bottom: 5px;">Patient</h3>
+                </div>
+            </a>
+
+            <a href="/register/doctor" class="card" style="text-decoration: none; display: flex; align-items: center; gap: 20px; padding: 25px; transition: all 0.3s ease;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #0d9488, #0891b2); display: flex; align-items: center; justify-content: center; color: white;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 style="color: #134e4a; margin-bottom: 5px;">Doctor</h3>
+                </div>
+            </a>
+        </div>
+
+        <div class="login-footer" style="margin-top: 25px;">
+            <p>Already have an account? <a href="/login">Sign in</a></p>
+        </div>
+    </div>
+</body>
+</html>

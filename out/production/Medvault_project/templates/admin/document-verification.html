@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Verification - MedVault Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar"><div class="container"><a href="/admin/dashboard" class="navbar-brand">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>MedVault Admin</a>
+        <ul class="navbar-nav"><li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li></ul></div></nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/admin/dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/admin/doctors">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Manage Doctors
+            </a></li>
+            <li><a href="/admin/patients">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Patients
+            </a></li>
+            <li><a href="/admin/document-verification" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Document Verification
+            </a></li>
+        </ul>
+    </div>
+    <main class="main-content">
+        <div class="page-header"><h1 class="page-title">Document Verification</h1><p class="page-subtitle">View unverified medical documents</p></div>
+        <div class="card">
+            <div th:if="${#lists.isEmpty(records)}" class="empty-state"><h3>No Pending Documents</h3><p>All medical documents have been verified.</p></div>
+            <table th:if="${!#lists.isEmpty(records)}" class="table">
+                <thead><tr><th>Patient</th><th>Title</th><th>Type</th><th>Date</th><th>Uploaded</th></tr></thead>
+                <tbody>
+                    <tr th:each="record : ${records}">
+                        <td th:text="${record.patient.user.fullName}">Patient</td>
+                        <td th:text="${record.title}">Title</td>
+                        <td th:text="${record.recordType}">Type</td>
+                        <td th:text="${record.recordDate}">Date</td>
+                        <td th:text="${#temporals.format(record.createdAt, 'MMM dd, yyyy')}">Upload Date</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Doctors - MedVault Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar"><div class="container"><a href="/admin/dashboard" class="navbar-brand"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>MedVault Admin</a><ul class="navbar-nav"><li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li></ul></div></nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/admin/dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/admin/doctors" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Manage Doctors
+            </a></li>
+            <li><a href="/admin/patients">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Patients
+            </a></li>
+            <li><a href="/admin/document-verification">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Document Verification
+            </a></li>
+        </ul>
+    </div>
+    <main class="main-content">
+        <div class="page-header"><h1 class="page-title">Manage Doctors</h1><p class="page-subtitle">View, verify, and manage doctor accounts</p></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        
+        <div th:if="${!#lists.isEmpty(pendingDoctors)}" class="card" style="margin-bottom: 20px; border: 2px solid #f59e0b;">
+            <div class="card-header"><h2 class="card-title">Pending Verification</h2></div>
+            <table class="table">
+                <thead><tr><th>Name</th><th>Email</th><th>Specialization</th><th>License</th><th>Actions</th></tr></thead>
+                <tbody>
+                    <tr th:each="doctor : ${pendingDoctors}">
+                        <td th:text="${doctor.user.fullName}">Doctor</td>
+                        <td th:text="${doctor.user.email}">email</td>
+                        <td th:text="${doctor.specialization}">Spec</td>
+                        <td th:text="${doctor.licenseNumber}">License</td>
+                        <td class="action-buttons">
+                            <form th:action="@{/admin/doctors/{id}/verify(id=${doctor.id})}" method="post" style="display: inline;"><button type="submit" class="btn btn-success btn-sm">Verify</button></form>
+                            <form th:action="@{/admin/doctors/{id}/delete(id=${doctor.id})}" method="post" style="display: inline;"><button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this doctor?')">Delete</button></form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">All Doctors</h2></div>
+            <div th:if="${#lists.isEmpty(doctors)}" class="empty-state"><p>No doctors registered yet.</p></div>
+            <table th:if="${!#lists.isEmpty(doctors)}" class="table">
+                <thead><tr><th>Name</th><th>Email</th><th>Specialization</th><th>Status</th><th>Enabled</th><th>Actions</th></tr></thead>
+                <tbody>
+                    <tr th:each="doctor : ${doctors}">
+                        <td th:text="${doctor.user.fullName}">Doctor</td>
+                        <td th:text="${doctor.user.email}">email</td>
+                        <td th:text="${doctor.specialization}">Spec</td>
+                        <td><span th:if="${doctor.verified}" class="badge badge-success">Verified</span><span th:if="${!doctor.verified}" class="badge badge-warning">Pending</span></td>
+                        <td><span th:if="${doctor.user.enabled}" class="badge badge-success">Active</span><span th:if="${!doctor.user.enabled}" class="badge badge-danger">Disabled</span></td>
+                        <td class="action-buttons">
+                            <form th:action="@{/admin/doctors/{id}/toggle-status(id=${doctor.id})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn btn-sm" th:classappend="${doctor.user.enabled ? 'btn-warning' : 'btn-success'}" th:text="${doctor.user.enabled ? 'Disable' : 'Enable'}">Toggle</button>
+                            </form>
+                            <form th:action="@{/admin/doctors/{id}/delete(id=${doctor.id})}" method="post" style="display: inline;"><button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this doctor?')">Delete</button></form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

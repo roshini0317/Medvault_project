@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MedVault</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/patient/dashboard" class="navbar-brand">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                MedVault
+            </a>
+            <ul class="navbar-nav">
+                <li><span style="color: rgba(255,255,255,0.9);">Welcome, <span th:text="${patient.user.fullName}">Patient</span></span></li>
+                <li><a href="/logout" class="btn btn-primary btn-sm" style="border-color: white; color: white;">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li><a href="/patient/dashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                Dashboard
+            </a></li>
+            <li><a href="/patient/profile" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                My Profile
+            </a></li>
+            <li><a href="/patient/book-appointment">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Book Appointment
+            </a></li>
+            <li><a href="/patient/appointments">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                My Appointments
+            </a></li>
+            <li><a href="/patient/prescriptions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Prescriptions
+            </a></li>
+            <li><a href="/patient/health-records">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                Health Records
+            </a></li>
+            <li><a href="/patient/document-permissions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Document Permissions
+            </a></li>
+            <li><a href="/patient/reviews">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Reviews
+            </a></li>
+            <li><a href="/patient/emergency">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Emergency Request
+            </a></li>
+        </ul>
+    </div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">My Profile</h1>
+            <p class="page-subtitle">Manage your personal and medical information</p>
+        </div>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="card">
+            <form th:action="@{/patient/profile}" method="post">
+                <h3 style="margin-bottom: 20px; color: #134e4a;">Personal Information</h3>
+                <div class="grid grid-2" style="gap: 20px;">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" name="fullName" class="form-control" th:value="${patient.user.fullName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" th:value="${patient.user.email}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" th:value="${patient.user.phone}">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" th:value="${patient.dateOfBirth}">
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" class="form-control">
+                            <option value="">Select Gender</option>
+                            <option value="Male" th:selected="${patient.gender == 'Male'}">Male</option>
+                            <option value="Female" th:selected="${patient.gender == 'Female'}">Female</option>
+                            <option value="Other" th:selected="${patient.gender == 'Other'}">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood Group</label>
+                        <select id="bloodGroup" name="bloodGroup" class="form-control">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+" th:selected="${patient.bloodGroup == 'A+'}">A+</option>
+                            <option value="A-" th:selected="${patient.bloodGroup == 'A-'}">A-</option>
+                            <option value="B+" th:selected="${patient.bloodGroup == 'B+'}">B+</option>
+                            <option value="B-" th:selected="${patient.bloodGroup == 'B-'}">B-</option>
+                            <option value="AB+" th:selected="${patient.bloodGroup == 'AB+'}">AB+</option>
+                            <option value="AB-" th:selected="${patient.bloodGroup == 'AB-'}">AB-</option>
+                            <option value="O+" th:selected="${patient.bloodGroup == 'O+'}">O+</option>
+                            <option value="O-" th:selected="${patient.bloodGroup == 'O-'}">O-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" class="form-control" rows="2" th:text="${patient.address}"></textarea>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: #134e4a;">Emergency Contact</h3>
+                <div class="grid grid-2" style="gap: 20px;">
+                    <div class="form-group">
+                        <label for="emergencyContactName">Emergency Contact Name</label>
+                        <input type="text" id="emergencyContactName" name="emergencyContactName" class="form-control" th:value="${patient.emergencyContactName}">
+                    </div>
+                    <div class="form-group">
+                        <label for="emergencyContactPhone">Emergency Contact Phone</label>
+                        <input type="tel" id="emergencyContactPhone" name="emergencyContactPhone" class="form-control" th:value="${patient.emergencyContactPhone}">
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: #134e4a;">Medical Information</h3>
+                <div class="grid grid-2" style="gap: 20px;">
+                    <div class="form-group">
+                        <label for="allergies">Allergies</label>
+                        <textarea id="allergies" name="allergies" class="form-control" rows="2" placeholder="List any known allergies" th:text="${patient.allergies}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="chronicConditions">Chronic Conditions</label>
+                        <textarea id="chronicConditions" name="chronicConditions" class="form-control" rows="2" placeholder="List any chronic conditions" th:text="${patient.chronicConditions}"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
